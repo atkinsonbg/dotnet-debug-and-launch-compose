@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+  database:
+    container_name: api_postgres
+    image: postgres:11.6-alpine
+    environment:
+      POSTGRES_DB: api_postgres
+    volumes:
+      - ./Fixtures/sql/:/docker-entrypoint-initdb.d/
+    ports:
+      - "5432:5432"
+
+  dozzle:
+    container_name: api_dozzle
+    image: amir20/dozzle:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "8888:8080"
